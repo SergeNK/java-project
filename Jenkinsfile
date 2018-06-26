@@ -63,7 +63,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar"
+                sh "cp /var/www/html/rectangles/all/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar"
             }
         }
         stage('Promote Development branch to Master') {
