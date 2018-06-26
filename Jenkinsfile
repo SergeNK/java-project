@@ -128,7 +128,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "cp /var/www/html/rectangles/all/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar"
+                sh "cp /var/www/html/rectangles/all/${env.BRANCH_NAME}/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar /var/www/html/rectangles/green/rectangle_${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}.jar"
             }
         }
         stage('Promote Development branch to Master') {
@@ -139,20 +139,21 @@ pipeline {
                 branch 'development'
             }
             steps {
-                echo "Stashing Any Local Changes"
-                sh 'git stash'
-                echo "Checking Out Development Branch"
-                sh 'git checkout development'
-                echo 'Checking Out Master Branch'
-                sh 'git pull origin'
-                sh 'git checkout master'
-                echo 'Merging Development into Master Branch'
-                sh 'git merge development'
-                echo 'Pushing to Origin Master'
-                sh 'git push origin master'
-                echo 'Tagging the Release'
-                sh "git tag rectangle-${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}"
-                sh "git push origin rectangle-${env.MAJAOR_VERSION}.${env.BUILD_NUMBER}"
+              echo "Stashing Any Local Changes"
+              sh 'git stash'
+              echo "Checking Out Development Branch"
+              sh 'git checkout development'
+              echo 'Checking Out Master Branch'
+              sh 'git pull origin'
+              sh 'git checkout master'
+              sh 'git pull'
+              echo 'Merging Development into Master Branch'
+              sh 'git merge development'
+              echo 'Pushing to Origin Master'
+              sh 'git push origin master'
+              echo 'Tagging the Release'
+              sh "git tag rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
+              sh "git push origin rectangle-${env.MAJOR_VERSION}.${env.BUILD_NUMBER}"
             }
         }
     }
